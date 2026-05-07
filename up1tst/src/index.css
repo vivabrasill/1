@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 217 100% 18%;
+    --foreground: 0 0% 100%;
+
+    --card: 220 100% 25%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 220 100% 20%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 45 100% 50%;
+    --primary-foreground: 220 100% 15%;
+
+    --secondary: 217 100% 30%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 217 100% 25%;
+    --muted-foreground: 210 30% 70%;
+
+    --accent: 170 100% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 217 100% 35%;
+    --input: 217 100% 35%;
+    --ring: 45 100% 50%;
+
+    --radius: 0.5rem;
+    
+    --gold: 45 100% 50%;
+    --gold-light: 45 100% 65%;
+    --gold-dark: 40 100% 40%;
+    --blue-deep: 217 100% 18%;
+    --blue-light: 200 100% 55%;
+    --clover: 170 100% 45%;
+
+    --sidebar-background: 217 100% 15%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 45 100% 50%;
+    --sidebar-primary-foreground: 220 100% 15%;
+    --sidebar-accent: 217 100% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 217 100% 30%;
+    --sidebar-ring: 45 100% 50%;
+  }
+
+  .dark {
+    --background: 217 100% 12%;
+    --foreground: 0 0% 100%;
+    --card: 217 100% 18%;
+    --card-foreground: 0 0% 100%;
+    --popover: 217 100% 15%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 45 100% 50%;
+    --primary-foreground: 220 100% 15%;
+    --secondary: 217 100% 25%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 217 100% 20%;
+    --muted-foreground: 210 30% 70%;
+    --accent: 170 100% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 217 100% 30%;
+    --input: 217 100% 30%;
+    --ring: 45 100% 50%;
+    --sidebar-background: 217 100% 10%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 45 100% 50%;
+    --sidebar-primary-foreground: 220 100% 15%;
+    --sidebar-accent: 217 100% 20%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 217 100% 25%;
+    --sidebar-ring: 45 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .btn-spin {
+    @apply w-24 h-24 rounded-full bg-primary flex items-center justify-center text-5xl cursor-pointer border-4 border-primary shadow-glow animate-pulse-scale transition-all duration-300 hover:scale-110;
+  }
+
+.btn-spin-inline {
+  @apply w-24 h-24 rounded-full bg-primary flex items-center justify-center text-5xl cursor-pointer border-4 border-gold-light shadow-glow transition-all duration-300 hover:scale-110 -mt-4;
+  animation: pulse-scale 0.8s ease-in-out infinite;
+}
+  
+  .btn-resgate {
+    @apply bg-foreground text-card font-bold text-xl py-4 px-8 rounded-xl transition-all duration-200 hover:bg-muted-foreground hover:scale-105 shadow-lg;
+  }
+  
+  .video-container {
+    @apply relative w-full max-w-sm mx-auto rounded-3xl overflow-hidden;
+  }
+  
+  .popup-overlay {
+    @apply fixed inset-0 bg-background/80 backdrop-blur-md flex items-center justify-center z-50;
+  }
+  
+  .popup-content {
+    @apply bg-card p-6 rounded-2xl shadow-2xl text-center max-w-sm w-11/12 animate-scale-in;
+  }
+  
+  .text-gold {
+    @apply text-primary;
+  }
+  
+  .shadow-glow {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.5), 0 0 60px hsl(var(--primary) / 0.3);
+  }
+  
+  .shadow-glow-blue {
+    box-shadow: 0 0 40px hsl(var(--blue-light) / 0.4);
+  }
+}
+
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.animate-pulse-scale {
+  animation: pulse-scale 0.8s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes winner-pulse {
+  0%, 100% { 
+    transform: scale(1); 
+    filter: drop-shadow(0 0 10px hsl(var(--gold)));
+  }
+  50% { 
+    transform: scale(1.15); 
+    filter: drop-shadow(0 0 25px hsl(var(--gold))) drop-shadow(0 0 40px hsl(var(--gold-light)));
+  }
+}
+
+.animate-winner-pulse {
+  animation: winner-pulse 0.6s ease-in-out infinite;
+}
+
+@keyframes spin-reel {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+
+.slot-reel {
+  animation: spin-reel 0.1s linear infinite;
+}
+
+.slot-container {
+  @apply relative overflow-hidden rounded-2xl;
+  background: linear-gradient(180deg, hsl(var(--blue-deep)) 0%, hsl(217 100% 25%) 50%, hsl(var(--blue-deep)) 100%);
+  box-shadow: 
+    inset 0 0 30px hsl(var(--blue-light) / 0.3),
+    0 0 40px hsl(var(--blue-light) / 0.2);
+}
+
+.slot-frame {
+  @apply absolute inset-0 pointer-events-none z-10;
+  background: linear-gradient(180deg, 
+    hsl(var(--blue-deep)) 0%, 
+    transparent 20%, 
+    transparent 80%, 
+    hsl(var(--blue-deep)) 100%
+  );
+}
+
+.slot-highlight {
+  @apply absolute left-0 right-0 h-24 z-20 pointer-events-none;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 3px solid hsl(var(--gold));
+  border-bottom: 3px solid hsl(var(--gold));
+  box-shadow: 
+    inset 0 0 20px hsl(var(--gold) / 0.3),
+    0 0 15px hsl(var(--gold) / 0.4);
+}
+
+.slot-column {
+  @apply flex flex-col items-center;
+  border-left: 2px solid hsl(var(--blue-light) / 0.3);
+  border-right: 2px solid hsl(var(--blue-light) / 0.3);
+}
+
+.slot-icon {
+  @apply w-20 h-20 flex items-center justify-center text-4xl;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}

